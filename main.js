@@ -4,7 +4,10 @@ dotenv.config();
 import express from "express";
 import cors from "cors";
 
+import { user_router } from "./src/routes/routes.js";
+
 const app = express();
+const PORT = process.env.PORT || 5522;
 
 // Enable CORS
 app.use(cors());
@@ -13,13 +16,8 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.get("/", (req, res) => {
-  res.json({
-    Name: process.env.NAME,
-    Age: 21,
-  });
-});
+app.use("/api/user", user_router);
 
-app.listen(3000, () => {
-  console.log(`Server is running on http://localhost:3000`);
+app.listen(PORT, () => {
+  console.log(`Server is running on http://localhost:${PORT}`);
 });
